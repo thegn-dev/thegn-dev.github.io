@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Online Paint</title>
+  <style>
+    body {
+      text-align: center;
+      background: tan;
+    }
+
+    canvas {
+      border: 2px solid black;
+      background: white;
+      cursor: crosshair;
+    }
+
+    .tools {
+      margin: 10px;
+    }
+    .collor{
+         
+        border: 5px solid;
+
+    }
+  </style>
+</head>
+
+<body>
+
+<h2> Online Paint </h2>
+
+<div class="tools">
+    <div>
+        collor:
+        <canvas id="collor" width="100" height="100"></canvas>
+    </div>
+    <ol>
+        red: <input type="range" id="r" min="1" max="255">
+        blue: <input type="range" id="g" min="1" max="255"> 
+        green <input type="range" id="b" min="1" max="255">
+    </ol>
+
+</div>
+  
+  
+  Size: <input type="range" id="sizePicker" min="1" max="20" value="5">
+  <button onclick="clearCanvas()">Clear</button>
+</div>
+
+<canvas id="canvas" width="800" height="500"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let painting = false;
+
+canvas.addEventListener("mousedown", (e) => {painting = true,ctx.beginPath(),ctx.moveTo(e.offsetX, e.offsetY);});
+canvas.addEventListener("mouseup", () => painting = false);
+canvas.addEventListener("mousemove", draw);
+const colorChange = document.getElementById("collor");
+const rlis = document.getElementById("r");
+const glis = document.getElementById("g");
+const blis = document.getElementById("b");
+rlis.addEventListener("input", (e) =>{colorChange.style.backgroundColor = `rgb(${rlis.value},${glis.value},${blis.value})`})
+function draw(e) {
+  if (!painting) return;
+   
+
+ 
+  const size = document.getElementById("sizePicker").value;
+
+  ctx.lineWidth = size;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = `rgb(${rlis.value},${glis.value},${blis.value})`;
+
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+  
+}
+function inputbox(){
+
+}
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+</script>
+
+</body>
+</html>
