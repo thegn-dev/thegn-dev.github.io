@@ -58,7 +58,14 @@ let painting = false;
 canvas.addEventListener("mousedown", (e) => {painting = true,ctx.beginPath(),ctx.moveTo(e.offsetX, e.offsetY);});
 canvas.addEventListener("mouseup", () => painting = false);
 canvas.addEventListener("mousemove", draw);
-canvas.addEventListener("touchstart", (e) => {painting = true,ctx.beginPath(),ctx.moveTo(e.offsetX, e.offsetY);});
+canvas.addEventListener("touchstart", (e) => {painting = true,
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    ctx.moveTo(x, y);
+                   }
+                       );
 canvas.addEventListener("touchend", () => painting = false);
 canvas.addEventListener("touchmove", draw);
 const colorChange = document.getElementById("collor");
